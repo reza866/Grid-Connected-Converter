@@ -29,6 +29,15 @@ void inv_park(float d, float q, float *alpha, float *beta, float theta){
   *beta  = d*sinf(theta) + q*cosf(theta);
 }
 
+// inv clarke
+
+void inv_clarke(float alpha, float beta, float *a, float *b, float *c){
+
+  *a= alpha;
+  *b= -0.5f*alpha + sqrtf(3)*0.5f*beta;
+  *c= -0.5f*alpha - sqrtf(3)*0.5f*beta;
+}
+
 void controller_step(ControllerState *st, const ControllerParams *p, float ia, float ib, float ic, float id_ref, float iq_ref, float theta, float *va, float *vb, float *vc){
 
 
