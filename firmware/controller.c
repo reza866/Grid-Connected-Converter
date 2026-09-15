@@ -48,7 +48,7 @@ float ctrl_update_d(ControllerParams *p, ControllerState *st, float ref, float m
 
     float ctrl_effort = prop + next_integral;
     // TO DO
-    float k_anti = 1;
+    float k_anti = (10 * p->Ki)/(p->Kp);
     // anti windup
     if (ctrl_effort > p->v_max) {
       ctrl_effort = p->v_max;
@@ -72,7 +72,7 @@ float ctrl_update_d(ControllerParams *p, ControllerState *st, float ref, float m
 
     float ctrl_effort = prop + next_integral;
     //TO DO
-    float k_anti = 1;
+    float k_anti = (10 * p->Ki)/(p->Kp);
     // anti windup
     if (ctrl_effort > p->v_max) {
       ctrl_effort = p->v_max;
