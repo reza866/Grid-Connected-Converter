@@ -1,7 +1,7 @@
 #include "controller.h" 
 #include <math.h>
 
-void controller_init(ControllerState *st);
+
 
 
 // clarke transform
@@ -85,6 +85,11 @@ float ctrl_update_d(ControllerParams *p, ControllerState *st, float ref, float m
     }
 
   }
+
+void controller_init(ControllerState *st){
+  st->integral_d = 0;
+  st->integral_q = 0;
+}
 
 
 void controller_step(ControllerState *st, const ControllerParams *p, float ia, float ib, float ic, float id_ref, float iq_ref, float theta, float *va, float *vb, float *vc){
