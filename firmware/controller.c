@@ -5,7 +5,7 @@
 
 //controller update d-axis
 
-float ctrl_update_d(ControllerParams *p, ControllerState *st, float ref, float meas){
+float ctrl_update_d(const ControllerParams *p, ControllerState *st, float ref, float meas){
 
     float error = ref - meas;
     float prop = p->Kp*error;
@@ -24,12 +24,12 @@ float ctrl_update_d(ControllerParams *p, ControllerState *st, float ref, float m
     } else{
       st->integral_d = next_integral;
     }
-
+    return ctrl_effort;
   }
 
 //controller update q-axis
 
-float ctrl_update_d(ControllerParams *p, ControllerState *st, float ref, float meas){
+float ctrl_update_q(const ControllerParams *p, ControllerState *st, float ref, float meas){
 
     float error = ref - meas;
     float prop = p->Kp*error;
@@ -48,7 +48,7 @@ float ctrl_update_d(ControllerParams *p, ControllerState *st, float ref, float m
     } else{
       st->integral_q = next_integral;
     }
-
+    return ctrl_effort;
   }
 
 void controller_init(ControllerState *st){
@@ -79,9 +79,11 @@ float v_beta = 0.0f;
 
 inv_park(vd, vq, &v_alpha, &v_beta, theta);
 
-float va = 0.0f; float vb = 0.0f; float vc = 0.0f;
+//*va = 0.0f; 
+//*vb = 0.0f; 
+//*vc = 0.0f;
 
-inv_clarke(v_alpha, v_beta, &va, &vb, &vc);
+inv_clarke(v_alpha, v_beta, va, vb, vc);
 
 }
 

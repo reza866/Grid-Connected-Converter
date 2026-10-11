@@ -9,6 +9,7 @@ float wrap_angle(float angle){
         angle -= 2*PI_F;
     else if (angle < -PI_F)
         angle += 2*PI_F;
+    return angle;
 }
 
 
