@@ -83,13 +83,24 @@ void pll_step(PLLState *ppl, const PLLParams *p, float valpha, float vbeta ){
      */
     /* TODO */
     // Add EMA filter coeeficeint to the below
-    if (fabs(vq)<ppl->vq_filt){
-        ppl->lock_count += 1;
+    /*Why we filter |vq| at all. At lock, vq isn’t a clean zero — it has residual PWM/measurement noise riding on it, and even 
+    a well-tuned PLL leaves a small AC ripple on vq from any harmonic content in the input. If you tested the raw instantaneous 
+    vq against a threshold every single sample, the lock flag would flicker on and off as noise crosses the threshold in both 
+    directions. So instead you track a smoothed, slowly-moving version of how big vq typically is, and gate lock off that.
+
+     Why fabsf, not vq directly. vq oscillates around zero (positive and negative), so averaging it directly would average toward 
+     zero even while it’s swinging wildly — that would say “locked” when it isn’t. What you actually want to track is the 
+     magnitude of the wobble, so you take the absolute value first, then smooth. */
+    ppl->vq_filt = p->ema_alpha * fabsf(vq) + (1-p->ema_alpha)*ppl->vq_filt;
+
+    if (ppl->vq_filt < p->lock_thresh){
+        ppl->lock_count++;
+        if  ( ppl->lock_count > p->lock_debounce){
+        ppl->locked = 1;
+    }
     } else{
         ppl->lock_count = 0;
     }
-    if  ( ppl->lock_count == p->lock_debounce){
-        ppl->locked = 1;
-    }
+    
     
 }
