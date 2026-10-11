@@ -2,15 +2,13 @@
 #include "pll.h"
 #include "transforms.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif   
+ 
 
 float wrap_angle(float angle){
-    if(angle - M_PI > 0) 
-        angle = - M_PI;
-    else if (angle + M_PI < 0)
-        angle = M_PI;
+    if(angle > PI_F ) 
+        angle -= 2*PI_F;
+    else if (angle < -PI_F)
+        angle += 2*PI_F;
 }
 
 
