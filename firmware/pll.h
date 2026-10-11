@@ -2,7 +2,7 @@ typedef struct {
 float Kp, Ki;       // PI gains
 float  Ts;          // sample period, s
 float omega_nom;    // nominal grid angular frequency (rad/s)
-float domega_max;   // frequency correction sauration (rad/s)
+float omega_max;   // frequency correction sauration (rad/s)
 float ema_alpha;    // lock filter coefficient
 float lock_thresh;  // |vq| filtered below this counts toward lock
 int lock_debounce;  // consecutive samples required to declare lock
