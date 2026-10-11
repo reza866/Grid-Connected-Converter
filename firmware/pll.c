@@ -1,4 +1,5 @@
 #include<math.h>
+#include "pll.c"
 
 
 void pll_init(PLLState *pll, const PLLParams *p, float valpha0, float vbeta0){
